@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-guest-layout>//忘记密码
     <x-auth-card>
         <x-slot name="logo">
             <a href="/">
