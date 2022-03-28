@@ -7,6 +7,11 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
+    protected $commands =[
+        \App\Console\Commands\TestMqtt::class,
+        \App\Console\Commands\Subscribe::class,
+     
+    ];
     /**
      * Define the application's command schedule.
      *
