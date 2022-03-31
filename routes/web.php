@@ -22,6 +22,9 @@ Route::get('/pub', function () {
     $res = PhpMqtt\Client\Facades\MQTT::publish('testtopic', json_encode($data));
     dump($res);
 });
+Route::get('/thome',function() {
+    view('smarthome');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
