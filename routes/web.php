@@ -13,8 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/pub', function () {
+
+    $data = [
+        'name' => 'qing',
+        'age' => 18
+    ];
+    $res = PhpMqtt\Client\Facades\MQTT::publish('testtopic', json_encode($data));
+    dump($res);
 });
 
 Route::get('/dashboard', function () {

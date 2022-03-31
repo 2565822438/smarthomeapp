@@ -35,7 +35,7 @@ return [
         'default' => [
 
             // The host and port to which the client shall connect.
-            'host' => env('MQTT_HOST','broker-cn.emqx.io'),
+            'host' => env('MQTT_HOST','152.32.170.86'),
             'port' => env('MQTT_PORT', 1883),
 
             // The MQTT protocol version used for the connection.
