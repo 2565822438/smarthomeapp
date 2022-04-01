@@ -16,8 +16,8 @@
     <div class="min-h-screen bg-gray-100">
         @include('layouts.navigation')
 
-
-    </div>
+   
+</div>
     <div class="home">
         <img src="images/湿度.png" alt="湿度" />
         <p>温度：</p>
@@ -69,6 +69,41 @@
     </div>
 </body>
 <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+<script>
+		// Create a client instance
+		client = new Paho.MQTT.Client("152.32.170.86", Number(8083), "clientId");
+
+		// set callback handlers
+		client.onConnectionLost = onConnectionLost;
+		client.onMessageArrived = onMessageArrived;
+
+		// connect the client
+		client.connect({onSuccess:onConnect,userName:"clay",password:"11223344"});
+
+
+		// called when the client connects
+		function onConnect() {
+		  // Once a connection has been made, make a subscription and send a message.
+		  console.log("onConnect");
+		  client.subscribe("testtopic");
+		  message = new Paho.MQTT.Message("Hello");
+		  message.destinationName = "World";
+		  client.send(message);
+		}
+
+		// called when the client loses its connection
+		function onConnectionLost(responseObject) {
+		  if (responseObject.errorCode !== 0) {
+		    console.log("onConnectionLost:"+responseObject.errorMessage);
+		  }
+		}
+
+		// called when a message arrives
+		function onMessageArrived(message) {
+		  console.log("onMessageArrived:"+message.payloadString);
+		}
+	</script>
+
 <script>
     //RabbitMQ的web-mqtt连接地址
     const url = 'ws://152.32.170.86:8083/mqtt';
