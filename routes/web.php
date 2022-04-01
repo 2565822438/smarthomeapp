@@ -29,6 +29,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::get('/dashboard/smarthome', function () {
+    
     return view('smarthome');
 });
 //获取文件路径
