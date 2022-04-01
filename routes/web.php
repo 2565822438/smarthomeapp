@@ -20,14 +20,16 @@ Route::get('/pub', function () {
         'age' => 18
     ];
     $res = PhpMqtt\Client\Facades\MQTT::publish('testtopic', json_encode($data));
-    dump($res);
+    view('layouts.app');
 });
-Route::get('/thome',function() {
-    view('smarthome');
-});
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+Route::get('/dashboard/smarthome', function () {
+    return view('smarthome');
+});
+//获取文件路径
 require __DIR__.'/auth.php';
