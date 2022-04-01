@@ -26,7 +26,7 @@
     </div>
     <div class="home">
         <img src="./images/温度.png" alt="温度" />
-        <p>湿度：</p>
+        <p id="humi">湿度：</p>
         <p>56%</p>
     </div>
     <div class="home">
@@ -109,6 +109,7 @@
         var obj = eval('(' + message.payloadString + ')');
         console.log(obj);
         document.getElementById('temp').innerHTML = obj.temp;
+        document.getElementById('humi').innerHTML = obj.humi;
         console.log("onMessageArrived:" + message.payloadString);
     }
 </script>
