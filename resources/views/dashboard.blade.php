@@ -43,13 +43,13 @@
                 <div class="home">
                     <img src="./images/有害气体.png" alt="有害气体" />
                     <p>有害气体浓度：</p>
-                    <p>2.2</p>
+                    <p id="mq135">2.2</p>
                 </div>
             </div>
             <div class="col-6 col-md-3 col-lg-6 col-xl-3">
                 <div class="home">
                     <img src="./images/灯开关.png" alt="灯" />
-                    <p>灯: <span>开</span></p>
+                    <p>灯: <p id="lamp1">开</p></p>
                     <input id="lamp" type="checkbox" class="switch_1">
                 </div>
             </div>
@@ -115,8 +115,10 @@
     function displayDate() {
         if (document.getElementById("lamp").checked) {
             client.publish('testtopic', "{ \"lamp\":1 }");
+            document.getElementById('lamp1').innerHTML = "开";
         } else {
             client.publish('testtopic', "{ \"lamp\":0}");
+            document.getElementById('lamp1').innerHTML = "关";
         }
     }
     // 
@@ -165,11 +167,14 @@
         var obj = eval('(' + message.payloadString + ')');
         document.getElementById('temp').innerHTML = obj.temp;
         document.getElementById('humi').innerHTML = obj.humi;
+        document.getElementById('mq135').innerHTML = obj.mq135;
         console.log("onMessageArrived:" + message.payloadString);
         if (obj.lamp == 1) {
-            document.getElementById("lamp").checked = true
+            document.getElementById("lamp").checked = true;
+            document.getElementById('lamp1').innerHTML = "开";
         } else {
-            document.getElementById("lamp").checked = false
+            document.getElementById("lamp").checked = false;
+            document.getElementById('lamp1').innerHTML = "关";
         }
 
     }
