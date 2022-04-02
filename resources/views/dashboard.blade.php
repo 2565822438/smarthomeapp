@@ -115,10 +115,8 @@
     function displayDate() {
         if (document.getElementById("lamp").checked) {
             client.publish('testtopic', "{ \"lamp\":1 }");
-            document.getElementById('lamp1').innerHTML = "开";
         } else {
             client.publish('testtopic', "{ \"lamp\":0}");
-            document.getElementById('lamp1').innerHTML = "关";
         }
     }
     // 
@@ -164,11 +162,12 @@
 
     // 接收消息
     function onMessageArrived(message) {
+        console.log("接收的消息:" + message.payloadString);
         var obj = eval('(' + message.payloadString + ')');
         document.getElementById('temp').innerHTML = obj.temp;
         document.getElementById('humi').innerHTML = obj.humi;
         document.getElementById('mq135').innerHTML = obj.mq135;
-        console.log("onMessageArrived:" + message.payloadString);
+        
         if (obj.lamp == 1) {
             document.getElementById("lamp").checked = true;
             document.getElementById('lamp1').innerHTML = "开";
