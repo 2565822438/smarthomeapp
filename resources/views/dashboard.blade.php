@@ -6,82 +6,118 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>智能家居控制系统</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
     <script src="js/paho-mqtt.js" type="text/javascript"></script>
     <script src="js/mqtt.min.js" type="text/javascript"></script>
 </head>
 
 
-<body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100">
-        @include('layouts.navigation')
+<body>
+    <h1 class="text-primary align">智能家居控制系统</h1>
+    <div class="align">
+                @include('layouts.navigation')
+            </div>
+    <div class="align" >
+    <iframe allowtransparency="true" frameborder="0" width="565" height="98" scrolling="no" src="//tianqi.2345.com/plugin/widget/index.htm?s=2&z=3&t=1&v=0&d=3&bd=0&k=&f=&ltf=009944&htf=cc0000&q=1&e=1&a=1&c=54511&w=565&h=98&align=center"></iframe>
+    <div class="content">
+        
+        
+        <div class="row">
+
+            <div class="col-6 col-md-3 col-lg-6 col-xl-3">
+                <div class="home">
+                    <img src="images/湿度.png" alt="湿度" />
+                    <p>温度：</p>
+                    <p id="temp">26℃</p>
+                </div>
+            </div>
+            <div class="col-6 col-md-3 col-lg-6 col-xl-3">
+                <div class="home">
+                    <img src="./images/温度.png" alt="温度" />
+                    <p>湿度：</p>
+                    <p id="humi">56%</p>
+                </div>
+            </div>
+            <div class="col-6 col-md-3 col-lg-6 col-xl-3">
+                <div class="home">
+                    <img src="./images/有害气体.png" alt="有害气体" />
+                    <p>有害气体浓度：</p>
+                    <p>2.2</p>
+                </div>
+            </div>
+            <div class="col-6 col-md-3 col-lg-6 col-xl-3">
+                <div class="home">
+                    <img src="./images/灯开关.png" alt="灯" />
+                    <p>灯: <span>开</span></p>
+                    <input id="lamp" type="checkbox" class="switch_1">
+                </div>
+            </div>
+            <div class="col-6 col-md-3 col-lg-6 col-xl-3">
+                <div class="home">
+                    <img src="./images/插座.png" alt="灯" />
+                    <p>插座: <span>开</span></p>
+
+                    <input type="checkbox" class="switch_1">
+
+                </div>
+            </div>
+            <div class="col-6 col-md-3 col-lg-6 col-xl-3">
+                <div class="home">
+                    <img src="./images/风扇.png" alt="灯" />
+                    <p>风扇: <span>开</span></p>
+
+                    <input type="checkbox" class="switch_1">
+
+                </div>
+            </div>
+            <div class="col-6 col-md-3 col-lg-6 col-xl-3">
+                <div class="home">
+                    <img src="./images/窗户-关.png" alt="灯" />
+                    <p>窗户: <span>开</span></p>
+                    <input type="checkbox" class="switch_1">
+                </div>
+            </div>
+            <div class="col-6 col-md-3 col-lg-6 col-xl-3">
+                <div class="home">
+                    <img src="./images/门.png" alt="灯" />
+                    <p>门: <span>开</span></p>
+                    <input type="checkbox" class="switch_1">
+                </div>
+            </div>
+            <div class="col-6 col-md-3 col-lg-6 col-xl-3">
+                <div class="home">
+                    <img src="./images/安防模式.png" alt="灯" />
+                    <p>安防模式: <span>开</span></p>
+                    <input type="checkbox" class="switch_1">
+                </div>
+            </div>
+        </div>
     </div>
 
 
 
-    <div class="home">
-        <img src="images/湿度.png" alt="湿度" />
-        <p>温度：</p>
-        <p  id="temp">26℃</p>
-    </div>
-    <div class="home">
-        <img src="./images/温度.png" alt="温度" />
-        <p >湿度：</p>
-        <p id="humi">56%</p>
-    </div>
-    <div class="home">
-        <img src="./images/有害气体.png" alt="有害气体" />
-        <p>有害气体浓度：</p>
-        <p>2.2</p>
-    </div>
-    <div class="home">
-        <img src="./images/灯开关.png" alt="灯" />
-        <p>灯: <span>开</span></p>
-        <input id="lamp" type="checkbox" class="switch_1" >
-    </div>
-    <div class="home">
-        <img src="./images/插座.png" alt="灯" />
-        <p>插座: <span>开</span></p>
 
-        <input type="checkbox" class="switch_1">
 
-    </div>
-    <div class="home">
-        <img src="./images/风扇.png" alt="灯" />
-        <p>风扇: <span>开</span></p>
 
-        <input type="checkbox" class="switch_1">
 
-    </div>
-    <div class="home">
-        <img src="./images/窗户-关.png" alt="灯" />
-        <p>窗户: <span>开</span></p>
-        <input type="checkbox" class="switch_1">
-    </div>
-    <div class="home">
-        <img src="./images/门.png" alt="灯" />
-        <p>门: <span>开</span></p>
-        <input type="checkbox" class="switch_1">
-    </div>
-    <div class="home">
-        <img src="./images/安防模式.png" alt="灯" />
-        <p>安防模式: <span>开</span></p>
-        <input type="checkbox" class="switch_1">
-    </div>
+
+
+
+
 
 
 </body>
 <script>
     //事件监听，发送消息
     document.getElementById("lamp").addEventListener("click", displayDate);
-    function displayDate(){
-    if(document.getElementById("lamp").checked){
-        client.publish('testtopic', "{ \"lamp\":1 }");
-    }
-    else
-    {
-        client.publish('testtopic', "{ \"lamp\":0}");
-    }
+
+    function displayDate() {
+        if (document.getElementById("lamp").checked) {
+            client.publish('testtopic', "{ \"lamp\":1 }");
+        } else {
+            client.publish('testtopic', "{ \"lamp\":0}");
+        }
     }
     // 
 </script>
@@ -119,7 +155,7 @@
     // 错误处理
     function onConnectionLost(responseObject) {
         if (responseObject.errorCode !== 0) {
-            
+
             console.log("onConnectionLost:" + responseObject.errorMessage);
         }
     }
@@ -130,15 +166,13 @@
         document.getElementById('temp').innerHTML = obj.temp;
         document.getElementById('humi').innerHTML = obj.humi;
         console.log("onMessageArrived:" + message.payloadString);
-        if(obj.lamp==1){
-            document.getElementById("lamp").checked=true
-        }else
-        {
-            document.getElementById("lamp").checked=false
+        if (obj.lamp == 1) {
+            document.getElementById("lamp").checked = true
+        } else {
+            document.getElementById("lamp").checked = false
         }
-        
+
     }
-    
 </script>
 
 
