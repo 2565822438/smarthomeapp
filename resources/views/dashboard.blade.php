@@ -37,7 +37,7 @@
     <div class="home">
         <img src="./images/灯开关.png" alt="灯" />
         <p>灯: <span>开</span></p>
-        <input id="deng" type="checkbox" class="switch_1" >
+        <input id="lamp" type="checkbox" class="switch_1" >
     </div>
     <div class="home">
         <img src="./images/插座.png" alt="灯" />
@@ -72,14 +72,15 @@
 
 </body>
 <script>
-    document.getElementById("deng").addEventListener("click", displayDate);
+    //事件监听，发送消息
+    document.getElementById("lamp").addEventListener("click", displayDate);
     function displayDate(){
-    if(document.getElementById("deng").checked){
-        client.publish('testtopic', "{ \"deng\":1 }");
+    if(document.getElementById("lamp").checked){
+        client.publish('testtopic', "{ \"lamp\":1 }");
     }
     else
     {
-        client.publish('testtopic', "{ \"deng\":0}");
+        client.publish('testtopic', "{ \"lamp\":0}");
     }
     }
     // 
@@ -90,22 +91,22 @@
     var port = 8083
     var clientID = "qing";
     var topic = "testtopic";
-    // Create a client instance
+    // 创建客户端实例
     client = new Paho.MQTT.Client(hostname, Number(port), clientID);
 
-    // set callback handlers
+    // 设置回调处理程序
     client.onConnectionLost = onConnectionLost;
     client.onMessageArrived = onMessageArrived;
 
-    // connect the client
+    // 连接客户端
     client.connect({
         onSuccess: onConnect,
-        userName: "clay",
-        password: "11223344"
+        userName: "qing",
+        password: "666666"
     });
 
 
-    // called when the client connects
+    // 连接客户端时调用
     function onConnect() {
         // Once a connection has been made, make a subscription and send a message.
         console.log("onConnect");
@@ -115,7 +116,7 @@
         client.send(message);
     }
 
-    // called when the client loses its connection
+    // 错误处理
     function onConnectionLost(responseObject) {
         if (responseObject.errorCode !== 0) {
             
@@ -123,17 +124,17 @@
         }
     }
 
-    // called when a message arrives
+    // 接收消息
     function onMessageArrived(message) {
         var obj = eval('(' + message.payloadString + ')');
         document.getElementById('temp').innerHTML = obj.temp;
         document.getElementById('humi').innerHTML = obj.humi;
         console.log("onMessageArrived:" + message.payloadString);
-        if(obj.deng==1){
-            document.getElementById("deng").checked=true
+        if(obj.lamp==1){
+            document.getElementById("lamp").checked=true
         }else
         {
-            document.getElementById("deng").checked=false
+            document.getElementById("lamp").checked=false
         }
         
     }
