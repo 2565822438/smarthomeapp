@@ -8,26 +8,26 @@
     <title>智能家居控制系统</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="js/paho-mqtt.js" type="text/javascript"></script>
+    <script src="js/mqtt.min.js" type="text/javascript"></script>
 </head>
 
 
 <body class="font-sans antialiased">
-
-
     <div class="min-h-screen bg-gray-100">
         @include('layouts.navigation')
-
-
     </div>
+
+
+
     <div class="home">
         <img src="images/湿度.png" alt="湿度" />
-        <p id="temp">温度：</p>
-        <p>26℃</p>
+        <p>温度：</p>
+        <p  id="temp">26℃</p>
     </div>
     <div class="home">
         <img src="./images/温度.png" alt="温度" />
-        <p id="humi">湿度：</p>
-        <p>56%</p>
+        <p >湿度：</p>
+        <p id="humi">56%</p>
     </div>
     <div class="home">
         <img src="./images/有害气体.png" alt="有害气体" />
@@ -37,13 +37,13 @@
     <div class="home">
         <img src="./images/灯开关.png" alt="灯" />
         <p>灯: <span>开</span></p>
-        <button onclick="sendMessage()"></button>
+        <input id="deng" type="checkbox" class="switch_1" >
     </div>
     <div class="home">
         <img src="./images/插座.png" alt="灯" />
         <p>插座: <span>开</span></p>
 
-        <input type="checkbox" class="switch_1" onclick="sendMessage()">
+        <input type="checkbox" class="switch_1">
 
     </div>
     <div class="home">
@@ -68,11 +68,30 @@
         <p>安防模式: <span>开</span></p>
         <input type="checkbox" class="switch_1">
     </div>
+
+
 </body>
-<script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
 <script>
+    document.getElementById("deng").addEventListener("click", displayDate);
+    function displayDate(){
+    if(document.getElementById("deng").checked){
+        client.publish('testtopic', "{ \"deng\":1 }");
+    }
+    else
+    {
+        client.publish('testtopic', "{ \"deng\":0}");
+    }
+    }
+    // 
+</script>
+
+<script>
+    var hostname = "152.32.170.86"
+    var port = 8083
+    var clientID = "qing";
+    var topic = "testtopic";
     // Create a client instance
-    client = new Paho.MQTT.Client("152.32.170.86", Number(8083), "clientId");
+    client = new Paho.MQTT.Client(hostname, Number(port), clientID);
 
     // set callback handlers
     client.onConnectionLost = onConnectionLost;
@@ -90,7 +109,7 @@
     function onConnect() {
         // Once a connection has been made, make a subscription and send a message.
         console.log("onConnect");
-        client.subscribe("testtopic");
+        client.subscribe(topic);
         message = new Paho.MQTT.Message("Hello");
         message.destinationName = "World";
         client.send(message);
@@ -107,65 +126,19 @@
     // called when a message arrives
     function onMessageArrived(message) {
         var obj = eval('(' + message.payloadString + ')');
-        console.log(obj);
         document.getElementById('temp').innerHTML = obj.temp;
         document.getElementById('humi').innerHTML = obj.humi;
         console.log("onMessageArrived:" + message.payloadString);
+        if(obj.deng==1){
+            document.getElementById("deng").checked=true
+        }else
+        {
+            document.getElementById("deng").checked=false
+        }
+        
     }
+    
 </script>
 
-<!-- <script>
-    //RabbitMQ的web-mqtt连接地址
-    const url = 'ws://152.32.170.86:8083/mqtt';
-    //获取订阅的topic
-    const topic = getQueryString("topic");
-    //连接到消息队列
-    let client = mqtt.connect(url);
-    client.on('connect', function() {
-        //连接成功后订阅topic
-        client.subscribe(topic, function(err) {
-            if (!err) {
-                showMessage("订阅topic：" + topic + "成功！");
-            }
-        });
-    });
-    //获取订阅topic中的消息
-    client.on('message', function(topic, message) {
-        showMessage("收到消息：" + message.toString());
-    });
-
-    //发送消息
-    function sendMessage() {
-        let targetTopic = document.getElementById("targetTopicInput").value;
-        let message = document.getElementById("messageInput").value;
-        //向目标topic中发送消息
-        client.publish(targetTopic, message);
-        showMessage("发送给" + targetTopic + "的消息：" + message);
-    }
-
-    //从URL中获取参数
-    function getQueryString(name) {
-        let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-        let r = window.location.search.substr(1).match(reg);
-        if (r != null) {
-            return decodeURIComponent(r[2]);
-        }
-        return null;
-    }
-
-    //在消息列表中展示消息
-    function showMessage(message) {
-        let messageDiv = document.getElementById("messageDiv");
-        let messageEle = document.createElement("div");
-        messageEle.innerText = message;
-        messageDiv.appendChild(messageEle);
-    }
-
-    //清空消息列表
-    function clearMessage() {
-        let messageDiv = document.getElementById("messageDiv");
-        messageDiv.innerHTML = "";
-    }
-</script> -->
 
 </html>

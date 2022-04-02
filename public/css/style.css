@@ -39,7 +39,7 @@
 
 /* Switch 1 Specific Styles Start */
 
-input[type="checkbox"].switch_1 {
+.switch_1 {
     font-size: 30px;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -55,11 +55,11 @@ input[type="checkbox"].switch_1 {
     transition: all 0.2s ease-in-out;
 }
 
-input[type="checkbox"].switch_1:checked {
+.switch_1:checked {
     background: #0ebeff;
 }
-
-input[type="checkbox"].switch_1:after {
+/* 圆形 */
+.switch_1:after {
     position: absolute;
     content: "";
     width: 1.5em;
@@ -75,6 +75,7 @@ input[type="checkbox"].switch_1:after {
     transition: all 0.2s ease-in-out;
 }
 
-input[type="checkbox"].switch_1:checked:after {
+/* 开 */
+.switch_1:checked:after {
     left: calc(100% - 1.5em);
 }
