@@ -56,9 +56,9 @@
             <div class="col-6 col-md-3 col-lg-6 col-xl-3">
                 <div class="home">
                     <img src="./images/插座.png" alt="灯" />
-                    <p>插座: <span>开</span></p>
+                    <p>插座: <span id="RELAY1">开</span></p>
 
-                    <input type="checkbox" class="switch_1">
+                    <input id="RELAY" type="checkbox" class="switch_1">
 
                 </div>
             </div>
@@ -109,16 +109,29 @@
 
 </body>
 <script>
-    //事件监听，发送消息
-    document.getElementById("lamp").addEventListener("click", displayDate);
-
-    function displayDate() {
+    //事件监听
+    document.getElementById("lamp").addEventListener("click", displayDate1);
+    document.getElementById("RELAY").addEventListener("click", displayDate2);
+    //发送消息
+    function displayDate1() {
         if (document.getElementById("lamp").checked) {
-            client.publish('testtopic', "{ \"lamp\":1 }");
+            client.publish('qing',"{ \"LED_SW\":0}");//开灯
         } else {
-            client.publish('testtopic', "{ \"lamp\":0}");
+            client.publish('qing',"{ \"LED_SW\":1 }");//关灯
         }
     }
+    function displayDate2() {
+        if (document.getElementById("RELAY").checked) {
+            client.publish('qing',"{\"RELAY\":0}");//开插座
+        } else {
+            client.publish('qing',"{\"RELAY\":1}");//插座
+        }
+    }
+
+
+
+    
+    
     // 
 </script>
 
@@ -126,7 +139,7 @@
     var hostname = "152.32.170.86"
     var port = 8083
     var clientID = "qing";
-    var topic = "testtopic";
+    var topic = "qing";
     // 创建客户端实例
     client = new Paho.MQTT.Client(hostname, Number(port), clientID);
 
@@ -165,15 +178,24 @@
         console.log("接收的消息:" + message.payloadString);
         var obj = eval('(' + message.payloadString + ')');
         document.getElementById('temp').innerHTML = obj.temp;
-        document.getElementById('humi').innerHTML = obj.humi;
+        document.getElementById('humi').innerHTML = obj.humt;
         document.getElementById('mq135').innerHTML = obj.mq135;
         
-        if (obj.lamp == 1) {
-            document.getElementById("lamp").checked = true;
-            document.getElementById('lamp1').innerHTML = "开";
-        } else {
+        if (obj.LED_SW == 1) {
             document.getElementById("lamp").checked = false;
             document.getElementById('lamp1').innerHTML = "关";
+            
+        } else {
+            document.getElementById("lamp").checked = true;
+            document.getElementById('lamp1').innerHTML = "开";
+        }
+        if (obj.RELAY == 1) {
+            document.getElementById("RELAY").checked = false;
+            document.getElementById('RELAY1').innerHTML = "关";
+            
+        } else {
+            document.getElementById("RELAY").checked = true;
+            document.getElementById('RELAY1').innerHTML = "开";
         }
 
     }
