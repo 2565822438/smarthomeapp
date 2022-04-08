@@ -1,9 +1,16 @@
 <?php
 
 use PhpMqtt\Client\Facades\MQTT;
+use Illuminate\Support\Facades\Route;
 
-function ceshi()
+
+
+
+function mqtt()
 {
-    $res = PhpMqtt\Client\Facades\MQTT::publish('testtopic',"11");
-    
+$mqtt = MQTT::connection();
+$mqtt->subscribe('qing', function (string $topic, string $message) {
+    return $message;
+}, 1);
+$mqtt->loop(true);
 }

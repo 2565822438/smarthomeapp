@@ -16,20 +16,14 @@
     flex: 1;
 }
 
-.home {
-    background-color: antiquewhite;
-    border-radius: 10%;
-    width: auto;
-    height: auto;
-    padding: 20px;
-    margin: 20% 20%;
-}
 
-.home img {
+
+img {
     width: 100px;
+    height: 100px;
 }
 
-.home button {
+button {
     height: 30px;
     width: 60px;
     border-radius: 5%;
