@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="js/paho-mqtt.js" type="text/javascript"></script>
     <script src="js/mqtt.min.js" type="text/javascript"></script>
+    <script src="js/echarts.js" type="text/javascript"></script>
 </head>
 
 
@@ -24,8 +25,38 @@
 
 
             <div class="row">
-                
+                <div id="main" class="col-6 col-md-3 col-lg-6 col-xl-3" style="width: 300px;height:300px">
+                    
+                </div>
+<script>
+    var chartDom = document.getElementById('main');
+var myChart = echarts.init(chartDom);
+var option;
 
+option = {
+  tooltip: {
+    formatter: '{a} <br/>{b} : {c}%'
+  },
+  series: [
+    {
+      name: 'Pressure',
+      type: 'gauge',
+      detail: {
+        formatter: '{value}'
+      },
+      data: [
+        {
+          value: 50,
+          name: 'SCORE'
+        }
+      ]
+    }
+  ]
+};
+
+option && myChart.setOption(option);
+
+</script>
                 <div class="col-6 col-md-3 col-lg-6 col-xl-3">
                     <div class="home">
                         <img src="images/湿度.png" alt="湿度" />
